@@ -1,0 +1,66 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+\documentclass[letterpaper, 10 pt]{mycv2}
+\title{Tyler Morrison}
+\date{\today}
+\name{Tyler N.}{Morrison}
+\position{Graduate Research Assistant}
+\mobile{913-944-2055}
+\email{morrison.730@osu.edu}
+\homepage{tyler-morrison.com}
+%\github{tymo77}
+%\gitlab{}
+%\stackoverflow{}
+\linkedin{tymo77}
+%\twitter{}
+%\skype{}
+%\reddit{}
+%\xing{}
+%\extrainfo{}
+\quote{``Let's see if this works.''}
+%\recipient{name}{address}
+\photo[rectangle,right,noedge]{images/head_nobg}
+
+% Set false if you don't want to highlight section with awesome color
+\setbool{acvSectionColorHighlight}{false}
+
+% Specify the location of any included fonts
+\fontdir[fonts/]
+
+% Colors for text
+% Uncomment if you would like to specify your own color
+% \definecolor{darktext}{HTML}{414141}
+% \definecolor{text}{HTML}{333333}
+% \definecolor{graytext}{HTML}{5D5D5D}
+% \definecolor{lighttext}{HTML}{999999}}
+
+\begin{document}
+	% Print the header with above personal informations
+	% Give optional argument to change alignment(C: center, L: left, R: right)
+	\makecvheader[L]
+	
+	% Print the footer with 3 arguments(<left>, <center>, <right>)
+	% Leave any of these blank if they are not needed
+	\makecvfooter{\today}{Tyler N. Morrison~~~|+|~~~Curriculum Vitae}{\thepage}
+%	
+%	%-------------------------------------------------------------------------------
+%	%	CV/RESUME CONTENT
+%	%	Each section is imported separately, open each file in turn to modify content
+%	%-------------------------------------------------------------------------------
+	\input{sections/education.tex}
+	\input{sections/experience.tex}
+	\input{sections/articles.tex}
+	\input{sections/presentation.tex}
+	\input{sections/otherpresentations.tex}
+	\input{sections/skills.tex}
+	\input{sections/experience2.tex}
+	\input{sections/extracurricular.tex}
+	\input{sections/honors.tex}
+	\input{sections/attended.tex}
+	\input{sections/reviews.tex}
+%	\input{sections/hobbies.tex}
+	
+	
+%	\input{sections/writing.tex}
+%	\input{sections/committees.tex}
+\end{document}
