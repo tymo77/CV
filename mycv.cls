@@ -1,509 +1,803 @@
-%%
-%% This is file `article.cls',
-%% generated with the docstrip utility.
-%%
-%% The original source files were:
-%%
-%% classes.dtx  (with options: `article')
-%% 
-%% This is a generated file.
-%% 
-%% The source is maintained by the LaTeX Project team and bug
-%% reports for it can be opened at https://latex-project.org/bugs.html
-%% (but please observe conditions on bug reports sent to that address!)
-%% 
-%% 
-%% Copyright 1993-2017
-%% The LaTeX3 Project and any individual authors listed elsewhere
-%% in this file.
-%% 
-%% This file was generated from file(s) of the LaTeX base system.
-%% --------------------------------------------------------------
-%% 
-%% It may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3c
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%    https://www.latex-project.org/lppl.txt
-%% and version 1.3c or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later.
-%% 
-%% This file has the LPPL maintenance status "maintained".
-%% 
-%% This file may only be distributed together with a copy of the LaTeX
-%% base system. You may however distribute the LaTeX base system without
-%% such generated files.
-%% 
-%% The list of all files belonging to the LaTeX base distribution is
-%% given in the file `manifest.txt'. See also `legal.txt' for additional
-%% information.
-%% 
-%% The list of derived (unpacked) files belonging to the distribution
-%% and covered by LPPL is defined by the unpacking scripts (with
-%% extension .ins) which are part of the distribution.
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{mycv}
-              [2018/12/12 A CV Class By Tyler Morrison]
-              
-\newcommand\@ptsize{}
-\newif\if@restonecol
-\newif\if@titlepage
-\@titlepagefalse
-
-\DeclareOption{a4paper}
-   {\setlength\paperheight {297mm}%
-    \setlength\paperwidth  {210mm}}
-\DeclareOption{a5paper}
-   {\setlength\paperheight {210mm}%
-    \setlength\paperwidth  {148mm}}
-\DeclareOption{b5paper}
-   {\setlength\paperheight {250mm}%
-    \setlength\paperwidth  {176mm}}
-\DeclareOption{letterpaper}
-   {\setlength\paperheight {11in}%
-    \setlength\paperwidth  {8.5in}}
-\DeclareOption{legalpaper}
-   {\setlength\paperheight {14in}%
-    \setlength\paperwidth  {8.5in}}
-\DeclareOption{executivepaper}
-   {\setlength\paperheight {10.5in}%
-    \setlength\paperwidth  {7.25in}}
-\DeclareOption{landscape}
-   {\setlength\@tempdima   {\paperheight}%
-    \setlength\paperheight {\paperwidth}%
-    \setlength\paperwidth  {\@tempdima}}
+%-------------------------------------------------------------------------------
+%                Identification
+%-------------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{mycv}[2018/12/12 A CV Class By Tyler Morrison]
 
 
-\DeclareOption{10pt}{\renewcommand\@ptsize{0}}
-\DeclareOption{11pt}{\renewcommand\@ptsize{1}}
-\DeclareOption{12pt}{\renewcommand\@ptsize{2}}
-\DeclareOption{oneside}{\@twosidefalse \@mparswitchfalse}
-\DeclareOption{twoside}{\@twosidetrue  \@mparswitchtrue}
+
+%-------------------------------------------------------------------------------
+%                Class options
+%
+% (need to be done before the external package loading, for example because
+% we need \paperwidth, \paperheight and \@ptsize to be defined before loading
+% geometry and fancyhdr)
+%-------------------------------------------------------------------------------
+% Options for draft or final
 \DeclareOption{draft}{\setlength\overfullrule{5pt}}
 \DeclareOption{final}{\setlength\overfullrule{0pt}}
-\DeclareOption{titlepage}{\@titlepagetrue}
-\DeclareOption{notitlepage}{\@titlepagefalse}
-\DeclareOption{onecolumn}{\@twocolumnfalse}
-\DeclareOption{twocolumn}{\@twocolumntrue}
-\DeclareOption{leqno}{\input{leqno.clo}}
-\DeclareOption{fleqn}{\input{fleqn.clo}}
-
-\ExecuteOptions{letterpaper,10pt,oneside,onecolumn,final}
-\ProcessOptions
-\input{size1\@ptsize.clo}
-\setlength\lineskip{1\p@}
-\setlength\normallineskip{1\p@}
-\renewcommand\baselinestretch{}
-\setlength\parskip{0\p@ \@plus \p@}
-\@lowpenalty   51
-\@medpenalty  151
-\@highpenalty 301
-\setcounter{topnumber}{2}
-\renewcommand\topfraction{.7}
-\setcounter{bottomnumber}{1}
-\renewcommand\bottomfraction{.3}
-\setcounter{totalnumber}{3}
-\renewcommand\textfraction{.2}
-\renewcommand\floatpagefraction{.5}
-\setcounter{dbltopnumber}{2}
-\renewcommand\dbltopfraction{.7}
-\renewcommand\dblfloatpagefraction{.5}
-\if@twoside
-  \def\ps@headings{%
-      \let\@oddfoot\@empty\let\@evenfoot\@empty
-      \def\@evenhead{\thepage\hfil\slshape\leftmark}%
-      \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-      \let\@mkboth\markboth
-    \def\sectionmark##1{%
-      \markboth {\MakeUppercase{%
-        \ifnum \c@secnumdepth >\z@
-          \thesection\quad
-        \fi
-        ##1}}{}}%
-    \def\subsectionmark##1{%
-      \markright {%
-        \ifnum \c@secnumdepth >\@ne
-          \thesubsection\quad
-        \fi
-        ##1}}}
-\else
-  \def\ps@headings{%
-    \let\@oddfoot\@empty
-    \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-    \let\@mkboth\markboth
-    \def\sectionmark##1{%
-      \markright {\MakeUppercase{%
-        \ifnum \c@secnumdepth >\m@ne
-          \thesection\quad
-        \fi
-        ##1}}}}
-\fi
-\def\ps@myheadings{%
-    \let\@oddfoot\@empty\let\@evenfoot\@empty
-    \def\@evenhead{\thepage\hfil\slshape\leftmark}%
-    \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
-    \let\@mkboth\@gobbletwo
-    \let\sectionmark\@gobble
-    \let\subsectionmark\@gobble
-    }
-  \if@titlepage
-  \newcommand\maketitle{\begin{titlepage}%
-  \let\footnotesize\small
-  \let\footnoterule\relax
-  \let \footnote \thanks
-  \null\vfil
-  %\vskip 60\p@
-  \begin{center}%
-    {\LARGE \@title \par}%
-    %\vskip 3em%
-%    {\large
-     %\lineskip .75em%
-%      \begin{tabular}[t]{c}%
-%        \@author
-%      \end{tabular}\par}%
-      %\vskip 1.5em%
-    %{\large \@date \par}%       % Set date in \large size.
-  \end{center}\par
-  \vfil\null
-  \end{titlepage}%
-  \setcounter{footnote}{0}%
-  \global\let\maketitle\relax
-  \global\let\@date\@empty
-  \global\let\@title\@empty
-  \global\let\title\relax
-  \global\let\date\relax
-  \global\let\and\relax
+% Inherit options of article
+\DeclareOption*{%
+	\PassOptionsToClass{\CurrentOption}{article}
 }
-\else
-\newcommand\maketitle{\par
-  \begingroup
-    \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
-    \def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
-    \long\def\@makefntext##1{\parindent 1em\noindent
-            \hb@xt@1.8em{%
-                \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
-    \if@twocolumn
-      \ifnum \col@number=\@ne
-        \@maketitle
-      \else
-        \twocolumn[\@maketitle]%
-      \fi
-    \else
-      \newpage
-      \global\@topnum\z@   % Prevents figures from going at top of page.
-      \@maketitle
-    \fi
-    \thispagestyle{plain}\@thanks
-  \endgroup
-  \setcounter{footnote}{0}%
-  \global\let\thanks\relax
-  \global\let\maketitle\relax
-  \global\let\@maketitle\relax
-  \global\let\@date\@empty
-  \global\let\@title\@empty
-  \global\let\title\relax
-  \global\let\author\relax
-  \global\let\date\relax
-  \global\let\and\relax
+\ProcessOptions\relax
+\LoadClass{article}
+
+%-------------------------------------------------------------------------------
+%                3rd party packages
+%-------------------------------------------------------------------------------
+%% Graphics
+\RequirePackage{graphicx}
+%% Add header support
+\RequirePackage{fancyhdr}
+\RequirePackage{lipsum}
+\RequirePackage{layout}
+\RequirePackage{multicol}
+\RequirePackage{multirow}
+\RequirePackage{tabularx}
+% Needed to make fixed length table
+\RequirePackage{array}
+% Needed to handle list environment
+\RequirePackage{enumitem}
+% Needed to handle text alignment
+\RequirePackage{ragged2e}
+% Needed to configure page layout
+\RequirePackage{geometry}
+% Needed to make header & footer effeciently
+\RequirePackage{fancyhdr}
+% Needed to manage colors
+\RequirePackage{xcolor}
+% Needed to use \ifxetex-\else-\fi statement
+\RequirePackage{ifxetex}
+% Needed to use \if-\then-\else statement
+\RequirePackage{xifthen}
+% Needed to use a toolbox of programming tools
+\RequirePackage{etoolbox}
+% Needed to change line spacing in specific environment
+\RequirePackage{setspace}
+
+% Needed to manage fonts
+\RequirePackage[quiet]{fontspec}
+
+% Needed to manage math fonts
+\RequirePackage{unicode-math}
+% Needed to use icons from font-awesome
+% (https://github.com/posquit0/latex-fontawesome)
+\RequirePackage{fontawesome}
+\RequirePackage[default,opentype]{sourcesanspro}
+%\RequirePackage[T1]{fontenc}
+%\RequirePackage[utf8]{inputenc}
+%\RequirePackage{tgbonum}
+
+% Needed for the photo ID
+\RequirePackage[skins]{tcolorbox}
+% Needed to deal a paragraphs
+\RequirePackage{parskip}
+
+\RequirePackage{ragged2e}
+
+% Needed to deal hyperlink
+\RequirePackage[hidelinks,unicode]{hyperref}
+\hypersetup{%
+	pdftitle={},
+	pdfauthor={},
+	pdfsubject={},
+	pdfkeywords={}
 }
-\def\@maketitle{%
-  \newpage
-  \null
-  %\vskip 2em%
-  \begin{center}%
-  \let \footnote \thanks
-    {\LARGE \@title \par \@date}%
-    %\vskip 1.5em%
-%    {\large
-%      %\lineskip .5em%
-%      \begin{tabular}[t]{c}%
-%        \@author
-%      \end{tabular}\par}%
-    %\vskip 1em%
-    %{\large \@date}%
-  \end{center}%
-  \par
-%  \vskip 1.5em
+
+%-------------------------------------------------------------------------------
+%                Configuration for directory locations
+%-------------------------------------------------------------------------------
+% Configure a directory location for fonts(default: 'fonts/')
+\newcommand*{\fontdir}[1][fonts/]{\def\@fontdir{#1}}
+\fontdir
+
+%-------------------------------------------------------------------------------
+%                Configuration for layout
+%-------------------------------------------------------------------------------
+%% Adjust the margins.
+\geometry{
+	left={.5in},
+	right={.5in},
+	top={.5in},
+	bottom={.5in},
+	%	showframe,
+	includeheadfoot,
 }
-\fi
-\setcounter{secnumdepth}{3}
-\newcounter {part}
-\newcounter {section}
-\newcounter {subsection}[section]
-\newcounter {subsubsection}[subsection]
 
-\renewcommand \thepart {\@Roman\c@part}
-\renewcommand \thesection {\@arabic\c@section}
-\renewcommand\thesubsection   {\thesection.\@arabic\c@subsection}
-\renewcommand\thesubsubsection{\thesubsection.\@arabic\c@subsubsection}
+%% Header & Footer
+% Set offset to each header and footer
+\fancyhfoffset{0em}
+% Remove head rule
+\renewcommand{\headrulewidth}{0pt}
+% Clear all header & footer fields
+\fancyhf{}
+% Enable if you want to make header or footer using fancyhdr
+\pagestyle{fancy}
 
-\newcommand\part{%
-   \if@noskipsec \leavevmode \fi
-   \par
-   \addvspace{4ex}%
-   \@afterindentfalse
-   \secdef\@part\@spart}
+%-------------------------------------------------------------------------------
+%                Configuration for colors
+%-------------------------------------------------------------------------------
+% Gray-scale colors
+\definecolor{white}{HTML}{FFFFFF}
+\definecolor{black}{HTML}{000000}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{gray}{HTML}{5D5D5D}
+\definecolor{lightgray}{HTML}{999999}
+% Basic colors
+\definecolor{green}{HTML}{C2E15F}
+\definecolor{orange}{HTML}{FDA333}
+\definecolor{purple}{HTML}{D3A4F9}
+\definecolor{red}{HTML}{FB4485}
+\definecolor{blue}{HTML}{6CE0F1}
+% Text colors
+\definecolor{darktext}{HTML}{414141}
+\colorlet{text}{darkgray}
+\colorlet{graytext}{gray}
+\colorlet{lighttext}{lightgray}
+% Awesome colors
+\definecolor{awesome-emerald}{HTML}{00A388}
+\definecolor{awesome-skyblue}{HTML}{0395DE}
+\definecolor{awesome-red}{HTML}{DC3522}
+\definecolor{awesome-pink}{HTML}{EF4089}
+\definecolor{awesome-orange}{HTML}{FF6138}
+\definecolor{awesome-nephritis}{HTML}{27AE60}
+\definecolor{awesome-concrete}{HTML}{95A5A6}
+\definecolor{awesome-darknight}{HTML}{131A28}
+\colorlet{awesome}{awesome-red}
 
-\def\@part[#1]#2{%
-    \ifnum \c@secnumdepth >\m@ne
-      \refstepcounter{part}%
-      \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
-    \else
-      \addcontentsline{toc}{part}{#1}%
-    \fi
-    {\parindent \z@ \raggedright
-     \interlinepenalty \@M
-     \normalfont
-     \ifnum \c@secnumdepth >\m@ne
-       \Large\bfseries \partname\nobreakspace\thepart
-       \par\nobreak
-     \fi
-     \huge \bfseries #2%
-     \markboth{}{}\par}%
-    \nobreak
-    \vskip 3ex
-    \@afterheading}
-\def\@spart#1{%
-    {\parindent \z@ \raggedright
-     \interlinepenalty \@M
-     \normalfont
-     \huge \bfseries #1\par}%
-     \nobreak
-     \vskip 3ex
-     \@afterheading}
-\newcommand\section{\@startsection {section}{1}{\z@}%
-                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
-                                   {2.3ex \@plus.2ex}%
-                                   {\normalfont\Large\bfseries}}
-\newcommand\subsection{\@startsection{subsection}{2}{\z@}%
-                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
-                                     {1.5ex \@plus .2ex}%
-                                     {\normalfont\large\bfseries}}
-\newcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
-                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
-                                     {1.5ex \@plus .2ex}%
-                                     {\normalfont\normalsize\bfseries}}
+% Boolean value to switch section color highlighting
+\newbool{acvSectionColorHighlight}
+\setbool{acvSectionColorHighlight}{true}
 
-\if@twocolumn
-  \setlength\leftmargini  {2em}
-\else
-  \setlength\leftmargini  {2.5em}
-\fi
-\leftmargin  \leftmargini
-\setlength\leftmarginii  {2.2em}
-\setlength\leftmarginiii {1.87em}
-\setlength\leftmarginiv  {1.7em}
-\if@twocolumn
-  \setlength\leftmarginv  {.5em}
-  \setlength\leftmarginvi {.5em}
-\else
-  \setlength\leftmarginv  {1em}
-  \setlength\leftmarginvi {1em}
-\fi
-\setlength  \labelsep  {.5em}
-\setlength  \labelwidth{\leftmargini}
-\addtolength\labelwidth{-\labelsep}
-\@beginparpenalty -\@lowpenalty
-\@endparpenalty   -\@lowpenalty
-\@itempenalty     -\@lowpenalty
-\renewcommand\theenumi{\@arabic\c@enumi}
-\renewcommand\theenumii{\@alph\c@enumii}
-\renewcommand\theenumiii{\@roman\c@enumiii}
-\renewcommand\theenumiv{\@Alph\c@enumiv}
-\newcommand\labelenumi{\theenumi.}
-\newcommand\labelenumii{(\theenumii)}
-\newcommand\labelenumiii{\theenumiii.}
-\newcommand\labelenumiv{\theenumiv.}
-\renewcommand\p@enumii{\theenumi}
-\renewcommand\p@enumiii{\theenumi(\theenumii)}
-\renewcommand\p@enumiv{\p@enumiii\theenumiii}
-\newcommand\labelitemi{\textbullet}
-\newcommand\labelitemii{\normalfont\bfseries \textendash}
-\newcommand\labelitemiii{\textasteriskcentered}
-\newcommand\labelitemiv{\textperiodcentered}
-\newenvironment{description}
-               {\list{}{\labelwidth\z@ \itemindent-\leftmargin
-                        \let\makelabel\descriptionlabel}}
-               {\endlist}
-\newcommand*\descriptionlabel[1]{\hspace\labelsep
-                                \normalfont\bfseries #1}
+% Awesome section color
+\def\@sectioncolor#1#2#3{%
+	\ifbool{acvSectionColorHighlight}{{\color{awesome}#1#2#3}}{#1#2#3}%
+}
 
-\newenvironment{verse}
-               {\let\\\@centercr
-                \list{}{\itemsep      \z@
-                        \itemindent   -1.5em%
-                        \listparindent\itemindent
-                        \rightmargin  \leftmargin
-                        \advance\leftmargin 1.5em}%
-                \item\relax}
-               {\endlist}
-\newenvironment{quotation}
-               {\list{}{\listparindent 1.5em%
-                        \itemindent    \listparindent
-                        \rightmargin   \leftmargin
-                        \parsep        \z@ \@plus\p@}%
-                \item\relax}
-               {\endlist}
-\newenvironment{quote}
-               {\list{}{\rightmargin\leftmargin}%
-                \item\relax}
-               {\endlist}
-\newenvironment{titlepage}
-    {%
-      \if@twocolumn
-        \@restonecoltrue\onecolumn
-      \else
-        \@restonecolfalse\newpage
-      \fi
-      \thispagestyle{empty}%
-      \setcounter{page}\@ne
-    }%
-    {\if@restonecol\twocolumn \else \newpage \fi
-     \if@twoside\else
-        \setcounter{page}\@ne
-     \fi
-    }
+%-------------------------------------------------------------------------------
+%                Configuration for fonts
+%-------------------------------------------------------------------------------
 
-\setlength\arraycolsep{5\p@}
-\setlength\tabcolsep{6\p@}
-\setlength\arrayrulewidth{.4\p@}
-\setlength\doublerulesep{2\p@}
-\setlength\tabbingsep{\labelsep}
-\skip\@mpfootins = \skip\footins
-\setlength\fboxsep{3\p@}
-\setlength\fboxrule{.4\p@}
-\renewcommand \theequation {\@arabic\c@equation}
-\newcounter{figure}
-\renewcommand \thefigure {\@arabic\c@figure}
-\def\fps@figure{tbp}
-\def\ftype@figure{1}
-\def\ext@figure{lof}
-\def\fnum@figure{\figurename\nobreakspace\thefigure}
-\newenvironment{figure}
-               {\@float{figure}}
-               {\end@float}
-\newenvironment{figure*}
-               {\@dblfloat{figure}}
-               {\end@dblfloat}
-\newcounter{table}
-\renewcommand\thetable{\@arabic\c@table}
-\def\fps@table{tbp}
-\def\ftype@table{2}
-\def\ext@table{lot}
-\def\fnum@table{\tablename\nobreakspace\thetable}
-\newenvironment{table}
-               {\@float{table}}
-               {\end@float}
-\newenvironment{table*}
-               {\@dblfloat{table}}
-               {\end@dblfloat}
-\newlength\abovecaptionskip
-\newlength\belowcaptionskip
-\setlength\abovecaptionskip{10\p@}
-\setlength\belowcaptionskip{0\p@}
-\long\def\@makecaption#1#2{%
-  \vskip\abovecaptionskip
-  \sbox\@tempboxa{#1: #2}%
-  \ifdim \wd\@tempboxa >\hsize
-    #1: #2\par
-  \else
-    \global \@minipagefalse
-    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
-  \fi
-  \vskip\belowcaptionskip}
-\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
-\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
-\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
-\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
-\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
-\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
-\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
-\DeclareRobustCommand*\cal{\@fontswitch\relax\mathcal}
-\DeclareRobustCommand*\mit{\@fontswitch\relax\mathnormal}
-\newcommand\@pnumwidth{1.55em}
-\newcommand\@tocrmarg{2.55em}
-\newcommand\@dotsep{4.5}
-\setcounter{tocdepth}{3}
-\newcommand*\l@part[2]{%
-  \ifnum \c@tocdepth >-2\relax
-    \addpenalty\@secpenalty
-    \addvspace{2.25em \@plus\p@}%
-    \setlength\@tempdima{3em}%
-    \begingroup
-      \parindent \z@ \rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      {\leavevmode
-       \large \bfseries #1\hfil \hb@xt@\@pnumwidth{\hss #2}}\par
-       \nobreak
-    \endgroup
-  \fi}
-\newcommand*\l@section[2]{%
-  \ifnum \c@tocdepth >\z@
-    \addpenalty\@secpenalty
-    \addvspace{1.0em \@plus\p@}%
-    \setlength\@tempdima{1.5em}%
-    \begingroup
-      \parindent \z@ \rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      \leavevmode \bfseries
-      \advance\leftskip\@tempdima
-      \hskip -\leftskip
-      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
-    \endgroup
-  \fi}
-\newcommand*\l@subsection{\@dottedtocline{2}{1.5em}{2.3em}}
-\newcommand*\l@subsubsection{\@dottedtocline{3}{3.8em}{3.2em}}
-\newcommand\listoffigures{%
-    \section*{\listfigurename}%
-      \@mkboth{\MakeUppercase\listfigurename}%
-              {\MakeUppercase\listfigurename}%
-    \@starttoc{lof}%
-    }
-\newcommand*\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
-\newcommand\listoftables{%
-    \section*{\listtablename}%
-      \@mkboth{%
-          \MakeUppercase\listtablename}%
-         {\MakeUppercase\listtablename}%
-    \@starttoc{lot}%
-    }
-\let\l@table\l@figure
-\newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
-               {\if@restonecol\onecolumn\else\clearpage\fi}
-\newcommand\@idxitem{\par\hangindent 40\p@}
-\newcommand\subitem{\@idxitem \hspace*{20\p@}}
-\newcommand\subsubitem{\@idxitem \hspace*{30\p@}}
-\newcommand\indexspace{\par \vskip 10\p@ \@plus5\p@ \@minus3\p@\relax}
-\renewcommand\footnoterule{%
-  \kern-3\p@
-  \hrule\@width.4\columnwidth
-  \kern2.6\p@}
-\newcommand\@makefntext[1]{%
-    \parindent 1em%
-    \noindent
-    \hb@xt@1.8em{\hss\@makefnmark}#1}
-\newcommand\figurename{Figure}
-\newcommand\tablename{Table}
-\newcommand\partname{Part}
-\def\today{\ifcase\month\or
-  January\or February\or March\or April\or May\or June\or
-  July\or August\or September\or October\or November\or December\fi
-  \space\number\day, \number\year}
-\setlength\columnsep{10\p@}
-\setlength\columnseprule{0\p@}
-\pagestyle{plain}
-\pagenumbering{arabic}
-\if@twoside
-\else
-  \raggedbottom
-\fi
-\if@twocolumn
-  \twocolumn
-  \sloppy
-  \flushbottom
-\else
-  \onecolumn
-\fi
-\endinput
-%%
-%% End of file `article.cls'.
+% To support LaTeX quoting style
+\defaultfontfeatures{Ligatures=TeX}
+
+% Set the FontAwesome font to be up-to-date.
+\setfontfamily\FA[Path=\@fontdir]{FontAwesome}
+
+% Set font for header (default is Roboto)
+%\newfontfamily\headerfont[
+%Path=\@fontdir,
+%UprightFont=*-Regular,
+%ItalicFont=*-Italic,
+%BoldFont=*-Bold,
+%BoldItalicFont=*-BoldItalic,
+%]{Roboto}
+%
+%\newfontfamily\headerfontlight[
+%Path=\@fontdir,
+%UprightFont=*-Thin,
+%ItalicFont=*-ThinItalic,
+%BoldFont=*-Medium,
+%BoldItalicFont=*-MediumItalic,
+%]{Roboto}
+
+\newfontfamily\headerfont[
+Path=\@fontdir,
+UprightFont=*-Regular,
+ItalicFont=*-Italic,
+BoldFont=*-SemiBold,
+BoldItalicFont=*-BoldItalic,
+]{OpenSans}
+
+\newfontfamily\headerfontlight[
+Path=\@fontdir,
+UprightFont=*-Light,
+ItalicFont=*-LightItalic,
+BoldFont=*-SemiBold,
+BoldItalicFont=*-SemiBoldItalic,
+]{OpenSans}
+
+\newfontfamily\footerfont[
+Path=\@fontdir,
+UprightFont=*-Regular,
+ItalicFont=*-Italic,
+BoldFont=*-Bold,
+BoldItalicFont=*-BoldItalic,
+]{OpenSans}
+
+\newfontfamily\bodyfont[
+Path=\@fontdir,
+UprightFont=*-Regular,
+ItalicFont=*-Italic,
+BoldFont=*-Bold,
+BoldItalicFont=*-BoldItalic,
+]{OpenSans}
+
+\newfontfamily\bodyfontlight[
+Path=\@fontdir,
+UprightFont=*-Light,
+ItalicFont=*-LightItalic,
+BoldFont=*-SemiBold,
+BoldItalicFont=*-SemiBoldItalic,
+]{OpenSans}
+
+%\newcommand*{\footerfont}{\sourcesanspro} 
+%\newcommand*{\bodyfont}{\sourcesanspro}
+%\newcommand*{\bodyfontlight}{\sourcesansprolight}
+%\newcommand*{\headerfont}{\sourcesanspro}
+%\newcommand*{\headerfontlight}{\sourcesansprolight}
+
+%\newcommand*{\footerfont}{} 
+%\newcommand*{\bodyfont}{}
+%\newcommand*{\bodyfontlight}{}
+%\newcommand*{\headerfont}{}
+%\newcommand*{\headerfontlight}{}
+%-------------------------------------------------------------------------------
+%                Configuration for styles
+%-------------------------------------------------------------------------------
+% Configure styles for each CV elements
+% For fundamental structures
+\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\mdseries\color{graytext} #1}}
+\newcommand*{\headerlastnamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text} #1}}
+\newcommand*{\headerpositionstyle}[1]{{\fontsize{10pt}{1em}\bodyfont\scshape\color{awesome} #1}}
+\newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext} #1}}
+\newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text} #1}}
+\newcommand*{\headerquotestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\itshape\color{darktext} #1}}
+\newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext} #1}}
+\newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
+\newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
+\newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
+
+% For elements of entry
+\newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\entrypositionstyle}[1]{{\fontsize{8pt}{1em}\bodyfont\scshape\color{graytext} #1}}
+\newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
+\newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
+\newcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
+
+% For elements of subentry
+\newcommand*{\subentrytitlestyle}[1]{{\fontsize{8pt}{1em}\bodyfont\mdseries\color{graytext} #1}}
+\newcommand*{\subentrypositionstyle}[1]{{\fontsize{7pt}{1em}\bodyfont\scshape\color{graytext} #1}}
+\newcommand*{\subentrydatestyle}[1]{{\fontsize{7pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
+\newcommand*{\subentrylocationstyle}[1]{{\fontsize{7pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
+\newcommand*{\subdescriptionstyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\upshape\color{text} #1}}
+
+% For elements of honor
+\newcommand*{\honortitlestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
+\newcommand*{\honorpositionstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\honordatestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
+\newcommand*{\honorlocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
+
+% For elements of skill
+\newcommand*{\skilltypestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\skillsetstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\color{text} #1}}
+
+% For elements of the cover letter
+\newcommand*{\lettersectionstyle}[1]{{\fontsize{14pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
+\newcommand*{\recipientaddressstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\scshape\color{graytext} #1}}
+\newcommand*{\recipienttitlestyle}[1]{{\fontsize{11pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\lettertitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\bfseries\color{darktext} \underline{#1}}}
+\newcommand*{\letterdatestyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
+\newcommand*{\lettertextstyle}{\fontsize{10pt}{1.4em}\bodyfontlight\upshape\color{graytext}}
+\newcommand*{\letternamestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\letterenclosurestyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\slshape\color{lighttext} #1}}
+
+% For elements of a presentation entry
+\newcommand*{\presauthorsstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{darktext} #1}}
+\newcommand*{\prestitlestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\slshape\color{darktext} #1}}
+\newcommand*{\preseventstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
+\newcommand*{\preslocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\slshape\color{awesome} #1}}
+\newcommand*{\presdatestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{graytext} #1}}
+\newcommand*{\prestypestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\color{darktext} #1}}
+
+% For elements of a presentation entry
+\newcommand*{\me}{{\bfseries\presauthorsstyle{Tyler Morrison}}}
+
+%-------------------------------------------------------------------------------
+%                Commands for personal information
+%-------------------------------------------------------------------------------
+% Define photo ID
+% Usage: \photo[circle|rectangle,edge|noedge,left|right]{<path-to-image>}
+\newcommand{\photo}[2][circle,edge,left]{%
+	\def\@photo{#2}
+	\@for\tmp:=#1\do{%
+		\ifthenelse{\equal{\tmp}{circle} \or \equal{\tmp}{rectangle}}%
+		{\let\@photoshape\tmp}{}%
+		\ifthenelse{\equal{\tmp}{edge} \or \equal{\tmp}{noedge}}%
+		{\let\@photoedge\tmp}{}%
+		\ifthenelse{\equal{\tmp}{left} \or \equal{\tmp}{right}}%
+		{\let\@photoalign\tmp}{}%
+	}%
+}
+\def\@photoshape{circle}
+\def\@photoedge{edge}
+\def\@photoalign{left}
+
+% Define writer's name
+% Usage: \name{<firstname>}{<lastname>}
+% Usage: \firstname{<firstname>}
+% Usage: \lastname{<lastname>}
+% Usage: \familyname{<familyname>}
+\newcommand*{\name}[2]{\def\@firstname{#1}\def\@lastname{#2}}
+\newcommand*{\firstname}[1]{\def\@firstname{#1}}
+\newcommand*{\lastname}[1]{\def\@lastname{#1}}
+\newcommand*{\familyname}[1]{\def\@lastname{#1}}
+\def\@familyname{\@lastname}
+
+% Define writer's address
+% Usage: \address{<address>}
+\newcommand*{\address}[1]{\def\@address{#1}}
+
+% Define writer's position
+% Usage: \name{<position>}
+\newcommand*{\position}[1]{\def\@position{#1}}
+
+% Defines writer's mobile (optional)
+% Usage: \mobile{<mobile number>}
+\newcommand*{\mobile}[1]{\def\@mobile{#1}}
+
+% Defines writer's email (optional)
+% Usage: \email{<email adress>}
+\newcommand*{\email}[1]{\def\@email{#1}}
+
+% Defines writer's homepage (optional)
+% Usage: \homepage{<url>}
+\newcommand*{\homepage}[1]{\def\@homepage{#1}}
+
+% Defines writer's github (optional)
+% Usage: \github{<github-nick>}
+\newcommand*{\github}[1]{\def\@github{#1}}
+
+% Defines writer's gitlab (optional)
+% Usage: \gitlab{<gitlab-nick>}
+\newcommand*{\gitlab}[1]{\def\@gitlab{#1}}
+
+% Defines writer's stackoverflow profile (optional)
+% Usage: \stackoverflow{<so userid>}{<so username>}
+%   e.g.https://stackoverflow.com/users/123456/sam-smith
+%       would be \stackoverflow{123456}{sam-smith}
+\newcommand*{\stackoverflow}[2]{\def\@stackoverflowid{#1}\def\@stackoverflowname{#2}}
+
+% Defines writer's linked-in (optional)
+% Usage: \linkedin{<linked-in-nick>}
+\newcommand*{\linkedin}[1]{\def\@linkedin{#1}}
+
+% Usage: \twitter{<twitter handle>}
+\newcommand*{\twitter}[1]{\def\@twitter{#1}}
+
+% Defines writer's skype (optional)
+% Usage: \skype{<skype account>}
+\newcommand*{\skype}[1]{\def\@skype{#1}}
+
+% Defines writer's reddit (optional)
+% Usage: \reddit{<reddit account>}
+\newcommand*{\reddit}[1]{\def\@reddit{#1}}
+
+% Defines writer's xing (optional)
+% Usage: \xing{<xing name>}
+\newcommand*{\xing}[1]{\def\@xing{#1}}
+
+% Defines writer's twitter (optional)
+% Defines writer's extra informations (optional)
+% Usage: \extrainfo{<extra informations>}
+\newcommand*{\extrainfo}[1]{\def\@extrainfo{#1}}
+
+% Defines writer's quote (optional)
+% Usage: \quote{<quote>}
+\renewcommand*{\quote}[1]{\def\@quote{#1}}
+
+% Defines recipient's information (cover letter only)
+% Usage: \recipient{<recipient name>}{<recipient address>}
+% Usage: \recipientname{<recipient name>}
+% Usage: \recipientaddress{<recipient address>}
+\newcommand*{\recipient}[2]{\def\@recipientname{#1}\def\@recipientaddress{#2}}
+\newcommand*{\recipientname}[1]{\def\@recipientname{#1}}
+\newcommand*{\recipientaddress}[1]{\def\@recipientaddress{#1}}
+
+% Defines the title for letter (cover letter only, optional)
+% Usage: \lettertitle{<title>}
+\newcommand*{\lettertitle}[1]{\def\@lettertitle{#1}}
+
+% Defines the date for letter (cover letter only)
+% Usage: \letterdate{<date>}
+\newcommand*{\letterdate}[1]{\def\@letterdate{#1}}
+
+% Defines a message of opening for letter (cover letter only)
+% Usage: \letteropening{<message>}
+\newcommand*{\letteropening}[1]{\def\@letteropening{#1}}
+
+% Defines a message of closing for letter (cover letter only)
+% Usage: \letterclosing{<message>}
+\newcommand*{\letterclosing}[1]{\def\@letterclosing{#1}}
+
+% Defines an enclosure for letter (cover letter only, optional)
+% Usage: \letterenclosure[<enclosure name>]{<enclosure>}
+\newcommand*{\letterenclname}[1][Enclosure]{\def\@letterenclname{#1}}
+\newcommand*{\letterenclosure}[2][]{%
+	% if an optional argument is provided, use it to redefine \enclname
+	\ifthenelse{\equal{#1}{}}{}{\def\@letterenclname{#1}}
+	\def\@letterenclosure{#2}
+}
+
+
+%-------------------------------------------------------------------------------
+%                Commands for extra
+%-------------------------------------------------------------------------------
+%% Define helper macros a user can change easily
+% Header
+\newcommand{\acvHeaderNameDelim}{\space}
+\newcommand{\acvHeaderAfterNameSkip}{.4mm}
+\newcommand{\acvHeaderAfterPositionSkip}{.4mm}
+\newcommand{\acvHeaderAfterAddressSkip}{-.5mm}
+\newcommand{\acvHeaderIconSep}{\space}
+\newcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+\newcommand{\acvHeaderAfterSocialSkip}{6mm}
+\newcommand{\acvHeaderAfterQuoteSkip}{5mm}
+
+% Others
+\newcommand{\acvSectionTopSkip}{3mm}
+\newcommand{\acvSectionContentTopSkip}{2.5mm}
+
+
+%-------------------------------------------------------------------------------
+%                Commands for utilities
+%-------------------------------------------------------------------------------
+% Use to align an element of tabular table
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Use to draw horizontal line with specific thickness
+\def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+
+% Use to execute conditional statements by checking empty string
+\newcommand*{\ifempty}[3]{\ifthenelse{\isempty{#1}}{#2}{#3}}
+
+
+%-------------------------------------------------------------------------------
+%                Commands for elements of CV structure
+%-------------------------------------------------------------------------------
+% Define a header for CV
+% Usage: \makecvheader
+\newcommand*{\makecvheader}[1][C]{%
+	\newcommand*{\drawphoto}{%
+		\ifthenelse{\isundefined{\@photo}}{}{%
+			\newlength{\photodim}
+			\ifthenelse{\equal{\@photoshape}{circle}}%
+			{\setlength{\photodim}{1.3cm}}%
+			{\setlength{\photodim}{1.8cm}}%
+			\ifthenelse{\equal{\@photoedge}{edge}}%
+			{\def\@photoborder{darkgray}}%
+			{\def\@photoborder{none}}%
+			\begin{tikzpicture}%
+			\node[\@photoshape, draw=\@photoborder, line width=0.3mm, inner sep=\photodim, fill overzoom image=\@photo] () {};
+			\end{tikzpicture}
+		}%
+	}
+	\newlength{\headertextwidth}
+	\newlength{\headerphotowidth}
+	\ifthenelse{\isundefined{\@photo}}{
+		\setlength{\headertextwidth}{\textwidth}
+		\setlength{\headerphotowidth}{0cm}
+	}{%
+		\setlength{\headertextwidth}{0.76\textwidth}
+		\setlength{\headerphotowidth}{0.24\textwidth}
+	}%
+	\begin{minipage}[c]{\headerphotowidth}%
+		\ifthenelse{\equal{\@photoalign}{left}}{\raggedright\drawphoto}{}
+	\end{minipage}
+	\begin{minipage}[c]{\headertextwidth}
+		\ifthenelse{\equal{#1}{L}}{\raggedright}{\ifthenelse{\equal{#1}{R}}{\raggedleft}{\centering}}
+		\headerfirstnamestyle{\@firstname}\headerlastnamestyle{{}\acvHeaderNameDelim\@lastname}%
+		\\[\acvHeaderAfterNameSkip]%
+		\ifthenelse{\isundefined{\@position}}{}{\headerpositionstyle{\@position\\[\acvHeaderAfterPositionSkip]}}%
+		\ifthenelse{\isundefined{\@address}}{}{\headeraddressstyle{\@address\\[\acvHeaderAfterAddressSkip]}}%
+		\headersocialstyle{%
+			\newbool{isstart}%
+			\setbool{isstart}{true}%
+			\ifthenelse{\isundefined{\@mobile}}%
+			{}%
+			{%
+				\faMobile\acvHeaderIconSep\@mobile%
+				\setbool{isstart}{false}%
+			}%
+			\ifthenelse{\isundefined{\@email}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{mailto:\@email}{\faEnvelope\acvHeaderIconSep\@email}%
+			}%
+			\ifthenelse{\isundefined{\@homepage}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{http://\@homepage}{\faHome\acvHeaderIconSep\@homepage}%
+			}%
+			\ifthenelse{\isundefined{\@github}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://github.com/\@github}{\faGithubSquare\acvHeaderIconSep\@github}%
+			}%
+			\ifthenelse{\isundefined{\@gitlab}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://gitlab.com/\@gitlab}{\faGitlab\acvHeaderIconSep\@gitlab}%
+			}%
+			\ifthenelse{\isundefined{\@stackoverflowid}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://stackoverflow.com/users/\@stackoverflowid}{\faStackOverflow\acvHeaderIconSep\@stackoverflowname}%
+			}%
+			\ifthenelse{\isundefined{\@linkedin}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://www.linkedin.com/in/\@linkedin}{\faLinkedinSquare\acvHeaderIconSep\@linkedin}%
+			}%
+			\ifthenelse{\isundefined{\@twitter}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://twitter.com/\@twitter}{\faTwitter\acvHeaderIconSep\@twitter}%
+			}%
+			\ifthenelse{\isundefined{\@skype}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\faSkype\acvHeaderIconSep\@skype%
+			}%
+			\ifthenelse{\isundefined{\@reddit}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://www.reddit.com/user/\@reddit}{\faReddit\acvHeaderIconSep\@reddit}%
+			}%
+			\ifthenelse{\isundefined{\@xing}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://www.xing.com/profile/\@xing}{\faXingSquare\acvHeaderIconSep\@xing}
+			}%
+			\ifthenelse{\isundefined{\@extrainfo}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\@extrainfo%
+			}%
+		} \\[\acvHeaderAfterSocialSkip]%
+		\ifthenelse{\isundefined{\@quote}}%
+		{}%
+		{\headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}}%
+	\end{minipage}%
+	\begin{minipage}[c]{\headerphotowidth}%
+		\ifthenelse{\equal{\@photoalign}{right}}{\raggedleft\drawphoto}{}
+	\end{minipage}
+}
+
+% Define a footer for CV
+% Usage: \makecvfooter{<left>}{<center>}{<right>}
+\newcommand*{\makecvfooter}[3]{%
+	\fancyfoot{}
+	\fancyfoot[L]{\footerstyle{#1}}
+	\fancyfoot[C]{\footerstyle{#2}}
+	\fancyfoot[R]{\footerstyle{#3}}
+}
+
+
+%%% Define the title format.
+%\def\maketitle{%
+%	\newpage
+%	\null
+%	\begin{center}%
+%		\let \footnote \thanks
+%		{\LARGE \@title}%
+%		\par {\@phone}%
+%	\end{center}%
+%	\par
+%}
+
+% Define a section for CV
+% Usage: \cvsection{<section-title>}
+\newcommand\cvsection[1]{%
+	\vspace{\acvSectionTopSkip}
+	\sectionstyle{#1}
+	\phantomsection
+	\color{gray}\vhrulefill{0.9pt}
+}
+
+% Define a subsection for CV
+% Usage: \cvsubsection{<subsection-title>}
+\newcommand{\cvsubsection}[1]{%
+	\vspace{\acvSectionContentTopSkip}
+	\vspace{-3mm}
+	\subsectionstyle{#1}
+	\phantomsection
+}
+
+% Define a paragraph for CV
+\newenvironment{cvparagraph}{%
+	\vspace{\acvSectionContentTopSkip}
+	\vspace{-3mm}
+	\paragraphstyle
+}{%
+	\par
+	\vspace{2mm}
+}
+
+% Define an environment for cventry
+\newenvironment{cventries}{%
+	\vspace{\acvSectionContentTopSkip}
+	\begin{center}
+	}{%
+	\end{center}
+}
+% Define an entry of cv information
+% Usage: \cventry{<position>}{<title>}{<location>}{<date>}{<description>}
+\newcommand*{\cventry}[5]{%
+	\vspace{-2.0mm}
+	\setlength\tabcolsep{0pt}
+	\setlength{\extrarowheight}{0pt}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+		\ifempty{#2#3}
+		{\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+		{\entrytitlestyle{#2} & \entrylocationstyle{#3} \\
+			\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+		\multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}
+	\end{tabular*}%
+}
+
+
+% Define an entry of cv education
+% Usage: \cveducation{1<position>}{2<title>}{3<location>}{4<date>}{5<description>}{6<image>}
+\newcommand*{\cveducation}[6]{%
+	\vspace{-2.0mm}
+	\setlength\tabcolsep{0pt}
+	\setlength{\extrarowheight}{0pt}
+	\ifempty{#6}
+	{\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+			\ifempty{#2#3}
+			{\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+			{\entrytitlestyle{#2} & \entrylocationstyle{#3} \\
+				\entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+			\multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}}
+		\end{tabular*}%
+	}
+	{%\setlength{\extrarowheight}{4pt}
+		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 4.5cm - 1.5cm} R{4.5cm}}
+			\ifempty{#2#3}
+			{\includegraphics[keepaspectratio,width = 10mm]{#6} & \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+			{\multirow[c]{3}{*}{\parbox[c]{1.5cm}{\centering\includegraphics[keepaspectratio,width = 1cm]{#6}}} & \entrytitlestyle{#2} & \entrylocationstyle{#3} \\
+			& \entrypositionstyle{#1} & \entrydatestyle{#4} \\}
+			& \multicolumn{2}{L{\textwidth - 1.5cm}}{\descriptionstyle{#5}}
+		\end{tabular*}%
+	}
+}
+
+% Define an entry of cv presentation
+% Usage: \cvpresentation{<authors>}{<title>}{<event>}{<location>}{<date>}{<type>}{<doi>}
+\newcommand*{\cvpresentation}[7]{%
+	\setlength{\RaggedRightLeftskip}{12pt}
+	\setlength{\RaggedRightRightskip}{0pt plus 4em}
+	\RaggedRight
+	\vspace{-2.0mm}
+	\presauthorsstyle{#1}. \prestitlestyle{#2}. \preseventstyle{#3}. \preslocationstyle{#4}. \presdatestyle{#5}. <<\prestypestyle{#6}>>. \ifempty{#7}{}{\href{https://doi.org/#7}{DOI:#7}}%
+	\vspace{4.0mm}
+}
+
+% Define an entry of cv journal article
+% Usage: \cvarticle{<authors>}{<title>}{<journal>}{<date>}{<status>}{<doi>}
+\newcommand*{\cvarticle}[6]{%
+	\setlength{\RaggedRightLeftskip}{12pt}
+	\setlength{\RaggedRightRightskip}{0pt plus 4em}
+	\RaggedRight
+	\vspace{-2.0mm}
+	\presauthorsstyle{#1}. \prestitlestyle{#2}. \preseventstyle{#3}. \presdatestyle{#4}. <<\prestypestyle{#5}>>. \ifempty{#6}{}{\href{https://doi.org/#6}{DOI:#6}}%
+	\vspace{4.0mm}
+}
+
+% Define an environment for cvsubentry
+\newenvironment{cvsubentries}{%
+	\vspace{6mm}
+	\begin{center}
+	}{%
+	\end{center}
+}
+% Define a subentry of cv information
+% Usage: \cvsubentry{<position>}{<title>}{<date>}{<description>}
+\newcommand*{\cvsubentry}[4]{%
+	\setlength\tabcolsep{0pt}
+	\setlength{\extrarowheight}{0pt}
+	\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+		\setlength\leftskip{0.2cm}
+		\subentrytitlestyle{#2} & \ifthenelse{\equal{#1}{}}
+		{\subentrydatestyle{#3}}{}
+		\ifthenelse{\equal{#1}{}}
+		{}
+		{\subentrypositionstyle{#1} & \subentrydatestyle{#3} \\}
+		\ifthenelse{\equal{#4}{}}
+		{}
+		{\multicolumn{2}{L{17.0cm}}{\subdescriptionstyle{#4}} \\}
+	\end{tabular*}
+}
+
+% Define an environment for cvhonor
+\newenvironment{cvhonors}{%
+	\vspace{\acvSectionContentTopSkip}
+	\vspace{-2mm}
+	\begin{center}
+		\setlength\tabcolsep{0pt}
+		\setlength{\extrarowheight}{0pt}
+		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 4.0cm} R{2.5cm}}
+		}{%
+		\end{tabular*}
+	\end{center}
+}
+% Define a line of cv information(honor, award or something else)
+% Usage: \cvhonor{<position>}{<title>}{<location>}{<date>}
+\newcommand*{\cvhonor}[4]{%
+	\honordatestyle{#4} & \honorpositionstyle{#1}, \honortitlestyle{#2} & \honorlocationstyle{#3} \\
+}
+
+%% Define an environment for cvhobby
+%\newenvironment{cvhobbies}{%
+%	\vspace{\acvSectionContentTopSkip}
+%	\vspace{-2mm}
+%	\begin{center}
+%		\setlength\tabcolsep{0pt}
+%		\setlength{\extrarowheight}{0pt}
+%		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{1.5cm} L{\textwidth - 4.0cm} R{2.5cm}}
+%		}{%
+%		\end{tabular*}
+%	\end{center}
+%}
+%% Define a line of cvhobby
+%% Usage: \cvhonor{<position>}{<title>}{<location>}{<date>}
+%\newcommand*{\cvhonor}[4]{%
+%	\honordatestyle{#4} & \honorpositionstyle{#1}, \honortitlestyle{#2} & \honorlocationstyle{#3} \\
+%}
+
+% Define an environment for cvskill
+\newenvironment{cvskills}{%
+	\vspace{\acvSectionContentTopSkip}
+	\vspace{-2.0mm}
+	\begin{center}
+		\setlength\tabcolsep{1ex}
+		\setlength{\extrarowheight}{0pt}
+		\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} r L{\textwidth * \real{0.9}}}
+		}{%
+		\end{tabular*}
+	\end{center}
+}
+% Define a line of cv information(skill)
+% Usage: \cvskill{<type>}{<skillset>}
+\newcommand*{\cvskill}[2]{%
+	\skilltypestyle{#1} & \skillsetstyle{#2} \\
+}
+
+% Define an environment for cvitems(for cventry)
+\newenvironment{cvitems}{%
+	\vspace{-4.0mm}
+	\begin{justify}
+		\begin{itemize}[leftmargin=2ex, nosep, noitemsep]
+			\setlength{\parskip}{0pt}
+			\renewcommand{\labelitemi}{$\bullet$}
+		}{%
+		\end{itemize}
+	\end{justify}
+	\vspace{-4.0mm}
+}
+
+%% Add education formatting.
+\newcommand\educationItem[7][]{\textbf{#2} \\ \textit{#3} \\ #4,  #5 \\ Graduation: #6 \\ GPA: #7/4.00}
+\newcommand\conferenceItem[4]{\textit{#1}; #2; #3; #4}
+
+%%% Modify section formatting.
+%\RequirePackage{titlesec}
+%\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+%\titlespacing*{\section}{0pt}{\baselineskip}{\baselineskip}[0pt]%{left h margin}{top v space}{bot v space}[left h space]
+%
+%\thispagestyle{empty}
