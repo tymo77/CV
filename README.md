@@ -7,8 +7,8 @@
 </h2>
 
 <div align="center">
-  <a href="https://raw.githubusercontent.com/posquit0/Awesome-CV/master/examples/cv.pdf">
-    <img alt="My CV" src="https://github.com/tymo77/CV/blob/master/CV.pdf" />
+  <a href="https://github.com/tymo77/CV/blob/master/CV.pdf">
+    <img alt="My CV" src="https://img.shields.io/badge/resume-pdf-green.svg" />
   </a>
 </div>
 
