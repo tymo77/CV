@@ -1,10 +1,11 @@
 %!TEX TS-program = xelatex
 %!TEX encoding = UTF-8 Unicode
 \documentclass[letterpaper, 10 pt]{mycv}
+\widowpenalties 1 10000
 \title{Tyler Morrison}
 \date{\today}
 \name{Tyler N.}{Morrison}
-\position{Graduate Research Assistant}
+\position{Graduate Research Assistant | PhD Student}
 \mobile{913-944-2055}
 \email{morrison.730@osu.edu}
 \homepage{tyler-morrison.com}
@@ -37,33 +38,34 @@
 \begin{document}
 	% Print the header with above personal informations
 	% Give optional argument to change alignment(C: center, L: left, R: right)
-	\makecvheader[L]
 	
+	\makecvheader[L]
 	% Print the footer with 3 arguments(<left>, <center>, <right>)
 	% Leave any of these blank if they are not needed
-	\makecvfooter{\today}{Tyler N. Morrison~~~|+|~~~Curriculum Vitae}{\thepage}
+	\makecvfooter{\today}{Tyler N. Morrison~~~|+|~~~Brief Curriculum Vitae}{\thepage}
 %	
 %	%-------------------------------------------------------------------------------
 %	%	CV/RESUME CONTENT
 %	%	Each section is imported separately, open each file in turn to modify content
 %	%-------------------------------------------------------------------------------
 	\input{sections/education.tex}
-	\input{sections/experience.tex}
+	\input{sections/experience_all.tex}
 	\input{sections/articles.tex}
 	
-	\newpage
+%	\newpage
 	\input{sections/conferences.tex}
 	\input{sections/presentation.tex}
 	\input{sections/honors.tex}
+	\input{sections/courses.tex}
 	\input{sections/skills.tex}
 	
 	
-	\newpage
-	\input{sections/experience2.tex}
-	\input{sections/otherpresentations.tex}
+%	\newpage
+%	\input{sections/experience2.tex}
+%	\input{sections/otherpresentations.tex}
 	\input{sections/extracurricular.tex}
-	\input{sections/attended.tex}
-	\input{sections/reviews.tex}
+%	\input{sections/attended.tex}
+%	\input{sections/reviews.tex}
 %	\input{sections/hobbies.tex}
 	
 	
