@@ -28,6 +28,7 @@
 %-------------------------------------------------------------------------------
 %% Graphics
 \RequirePackage{graphicx}
+\RequirePackage{pgf}
 %% Add header support
 \RequirePackage{fancyhdr}
 \RequirePackage{lipsum}
@@ -298,7 +299,7 @@ BoldItalicFont=*-SemiBoldItalic,
 %                Commands for personal information
 %-------------------------------------------------------------------------------
 % Define photo ID
-% Usage: \photo[circle|rectangle,edge|noedge,left|right]{<path-to-image>}
+% Usage: \photo[circle|rectangle,edge|noedge,left|center|right]{<path-to-image>}
 \newcommand{\photo}[2][circle,edge,left]{%
 	\def\@photo{#2}
 	\@for\tmp:=#1\do{%
@@ -470,9 +471,10 @@ BoldItalicFont=*-SemiBoldItalic,
 			\ifthenelse{\equal{\@photoedge}{edge}}%
 			{\def\@photoborder{darkgray}}%
 			{\def\@photoborder{none}}%
-			\begin{tikzpicture}%
-			\node[\@photoshape, draw=\@photoborder, line width=0.3mm, inner sep=\photodim, fill overzoom image=\@photo] () {};
-			\end{tikzpicture}
+%			\begin{tikzpicture}%
+%			\node[\@photoshape, draw=\@photoborder, line width=0.3mm, inner sep=\photodim, fill overzoom image=\@photo] () {};
+%			\end{tikzpicture}
+			\includegraphics[keepaspectratio,width=.75\textwidth]{\@photo}
 		}%
 	}
 	\newlength{\headertextwidth}
