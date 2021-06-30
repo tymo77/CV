@@ -375,6 +375,10 @@ BoldItalicFont=*-SemiBoldItalic,
 % Usage: \reddit{<reddit account>}
 \newcommand*{\reddit}[1]{\def\@reddit{#1}}
 
+% Defines writer's google scholar (optional)
+% Usage: \google{<google scholar user ID>}
+\newcommand*{\google}[1]{\def\@google{#1}}
+
 % Defines writer's xing (optional)
 % Usage: \xing{<xing name>}
 \newcommand*{\xing}[1]{\def\@xing{#1}}
@@ -563,6 +567,12 @@ BoldItalicFont=*-SemiBoldItalic,
 			{%
 				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
 				\href{https://www.xing.com/profile/\@xing}{\faXingSquare\acvHeaderIconSep\@xing}
+			}%
+			\ifthenelse{\isundefined{\@google}}%
+			{}%
+			{%
+				\ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+				\href{https://scholar.google.com/citations?user=\@google}{\faGoogle\acvHeaderIconSep Google Scholar}
 			}%
 			\ifthenelse{\isundefined{\@extrainfo}}%
 			{}%
