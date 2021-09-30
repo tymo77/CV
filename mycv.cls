@@ -295,6 +295,15 @@ BoldItalicFont=*-SemiBoldItalic,
 % For elements of a presentation entry
 \newcommand*{\me}{{\bfseries\presauthorsstyle{Tyler Morrison}}}
 
+\newcommand{\optionalperiod}[1]{%
+	\sbox0{#1}%
+	\ifdim\wd0=0pt
+	{}% if #1 is empty
+	\else
+	{#1.}% if #1 is not empty
+	\fi
+}
+
 %-------------------------------------------------------------------------------
 %                Commands for personal information
 %-------------------------------------------------------------------------------
@@ -707,7 +716,7 @@ BoldItalicFont=*-SemiBoldItalic,
 	\setlength{\RaggedRightRightskip}{0pt plus 4em}
 	\RaggedRight
 	\vspace{-2.0mm}
-	\presauthorsstyle{#1}. \prestitlestyle{#2}. \preseventstyle{#3}. \presdatestyle{#4}. <<\prestypestyle{#5}>>. \ifempty{#6}{}{\href{https://doi.org/#6}{DOI: #6}}%
+	\presauthorsstyle{#1}. \prestitlestyle{#2}. \optionalperiod{\preseventstyle{#3}} \optionalperiod{\presdatestyle{#4}} <<\prestypestyle{#5}>>. \ifempty{#6}{}{\href{https://doi.org/#6}{DOI: #6}}%
 	\vspace{4.0mm}
 }
 
