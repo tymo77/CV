@@ -705,7 +705,7 @@ BoldItalicFont=*-SemiBoldItalic,
 	\setlength{\RaggedRightRightskip}{0pt plus 4em}
 	\RaggedRight
 	\vspace{-2.0mm}
-	\presauthorsstyle{#1}. \prestitlestyle{#2}. \preseventstyle{#3}. \preslocationstyle{#4}. \presdatestyle{#5}. <<\prestypestyle{#6}>>. \ifempty{#7}{}{\href{https://doi.org/#7}{DOI: #7}}%
+	\presauthorsstyle{#1}. \prestitlestyle{#2}. \optionalperiod{\preseventstyle{#3}} \optionalperiod{\preslocationstyle{#4}} \optionalperiod{\presdatestyle{#5}} <<\prestypestyle{#6}>>. \ifempty{#7}{}{\href{https://doi.org/#7}{DOI: #7}}%
 	\vspace{4.0mm}
 }
 
